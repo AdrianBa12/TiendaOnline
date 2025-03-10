@@ -1,0 +1,84 @@
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img
+        src="https://res.cloudinary.com/dd6ferfis/image/upload/v1728786703/iconoImperial_hwikvn.png"
+        alt=""
+        width="45"
+        height="35"
+        class="d-inline-block align-text-top"
+      />
+      EL RINCON DEL CONSUMIDOR
+    </a>
+  </div>
+</nav>
+<div class="container mt-5">
+  <div class="row">
+    <!-- Lista de productos -->
+    <div class="col-md-6">
+      <h2 class="mb-3">Productos Disponibles</h2>
+      <div class="list-group">
+        <button
+          *ngFor="let producto of productos"
+          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+          (click)="agregarAlCarrito(producto)"
+        >
+          {{ producto.nombre }}
+          <span class="badge bg-primary">${{ producto.precio }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Carrito de compras -->
+    <div class="col-md-6">
+      <h2 class="mb-3">Carrito</h2>
+      <ul class="list-group mb-3">
+        <li
+          *ngFor="let producto of carrito; let i = index"
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          {{ producto.nombre }}
+          <span>
+            ${{ producto.precio }}
+            <button
+              class="btn btn-danger btn-sm ms-2"
+              (click)="eliminarDelCarrito(i)"
+            >
+              X
+            </button>
+          </span>
+        </li>
+      </ul>
+
+      <h4 class="text-end">Total: ${{ total }}</h4>
+    </div>
+  </div>
+
+  <!-- Pago -->
+  <div class="card shadow-lg p-4 mt-4">
+    <h2 class="text-center mb-4">Pago con Tarjeta</h2>
+
+    <div class="mb-3">
+      <label for="codigoPostal" class="form-label">Código Postal</label>
+      <input
+        type="text"
+        id="codigoPostal"
+        class="form-control"
+        [(ngModel)]="codigoPostal"
+        placeholder="Ingrese su código postal"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Detalles de la Tarjeta</label>
+      <div id="card-element" class="form-control p-2"></div>
+    </div>
+
+    <button class="btn btn-success w-100" (click)="realizarPago()">
+      Pagar ${{ total }}
+    </button>
+
+    <div *ngIf="mensaje" class="alert alert-success mt-3">{{ mensaje }}</div>
+    <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+  </div>
+</div>
